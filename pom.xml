@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.challange.api</groupId>
 	<artifactId>TranferAndBalanceConsult</artifactId>
-	<version>0.0.2</version>
+	<version>0.0.3</version>
 	<name>TranferAndBalanceConsult</name>
 	<description>Appication to consult balance and transfer</description>
 	<properties>
