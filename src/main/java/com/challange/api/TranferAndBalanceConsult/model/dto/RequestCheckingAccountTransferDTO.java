@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class RequestCheckingAccountTransferDTO {
 
-    private String id;
+    private String idBank;
     private Double transferAmount;
     private CheckingAccountFrom checkingAccountFrom;
     private CheckingAccountTo checkingAccountTo;

@@ -30,6 +30,6 @@ public class AccountController {
         log.info("Entering in the controller - Account transfer");
         ResponseCheckingAccountTransferDTO response = service.checkingAccountTransfer(requestDTO);
         log.info("leaving in the controller - Account transfer");
-        return ResponseEntity.ok().body(null);
+        return ResponseEntity.ok().body(response);
     }
 }

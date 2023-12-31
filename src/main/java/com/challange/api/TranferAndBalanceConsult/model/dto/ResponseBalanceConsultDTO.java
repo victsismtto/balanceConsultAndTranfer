@@ -13,6 +13,6 @@ import org.springframework.stereotype.Component;
 public class ResponseBalanceConsultDTO {
 
     private String balance;
-    private String data;
+    private String date;
 
 }

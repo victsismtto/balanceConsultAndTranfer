@@ -39,23 +39,41 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public ResponseCheckingAccountTransferDTO checkingAccountTransfer(RequestCheckingAccountTransferDTO requestDTO) throws Exception {
 
-        APICadastroDTO apiCadastroDTO = cadastroClient.requestToAPICadastro(requestDTO.getId());
-        LocalDateTime today = LocalDateTime.parse(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
+        APICadastroDTO apiCadastroDTO = cadastroClient.requestToAPICadastro(requestDTO.getIdBank());
         CheckingAccountTranferEntity transferEntity = checkingAccountRepository.findByName(apiCadastroDTO.getName());
-        if (today.isAfter(LocalDateTime.parse(transferEntity.getDate()))) {
-            transferEntity.setDailyLimitUsed(0.00);
-        }
+//        LocalDateTime today = LocalDateTime.now();
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+//        LocalDateTime localDateTime = LocalDateTime.parse(transferEntity.getDate(), formatter);
+        //jogar erro caso nao ache a conta
+//        if (localDateTime.isBefore(today)) {
+//            transferEntity.setDailyLimitUsed(0.00);
+//            transferEntity.setDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
+//        }
         if (!transferEntity.getIsActive()){
             throw new Exception();      //tratar esse erro depois
         }
-        double limitUsed = transferEntity.getDailyLimitUsed();
         double transferAmount = requestDTO.getTransferAmount();
-        limitUsed = limitUsed + transferAmount;
-        double maxAmountDaily = DailyLimit.MAX_VALUE.toDouble();
-        int compare = Double.compare(limitUsed, maxAmountDaily);
-        if (compare > 0) {
+        double amountAvailable = transferEntity.getBalance();
+        int compareAmountAvailable = Double.compare(transferAmount, amountAvailable);
+        if (compareAmountAvailable > 0) {
             throw new Exception();      //tratar esse erro depois
         }
-        return null;
+        double resultBalance = amountAvailable - transferAmount;
+
+        double limitUsed = transferEntity.getDailyLimitUsed();
+        limitUsed = limitUsed + transferAmount;
+        double maxAmountDaily = DailyLimit.MAX_VALUE.toDouble();
+        int compareLimitDaily = Double.compare(limitUsed, maxAmountDaily);
+        if (compareLimitDaily > 0) {
+            throw new Exception();      //tratar esse erro depois
+        }
+        //Preciso ainda fazer a notificacao para o Bacen
+        transferEntity.setDailyLimitUsed(limitUsed);
+        transferEntity.setBalance(resultBalance);
+        checkingAccountRepository.save(transferEntity);
+        //Preciso descobrir porque o Mongo nao atualiza e cria outra entidade
+        //Preciso fazer que o dinheiro chegue na outra conta
+
+        return accountMapper.toCheckingAccountTransferResponse();
     }
 }
