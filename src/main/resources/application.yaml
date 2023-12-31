@@ -1,5 +1,5 @@
 spring:
   data:
     mongodb:
-      uri: mongodb+srv://bank:kj9GdRer6CDp@cluster0.io3s2ai.mongodb.net/
+      uri: mongodb+srv://<user>:<password>@cluster0.io3s2ai.mongodb.net/
       database: ApiDatabase
