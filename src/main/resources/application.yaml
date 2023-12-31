@@ -1,0 +1,5 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb+srv://{username}:{password}@cluster0.io3s2ai.mongodb.net/
+      database: ApiDatabase
