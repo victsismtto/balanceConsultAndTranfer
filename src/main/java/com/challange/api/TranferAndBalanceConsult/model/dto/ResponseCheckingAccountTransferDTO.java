@@ -4,15 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.stereotype.Component;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ResponseBalanceConsultDTO {
+public class ResponseCheckingAccountTransferDTO {
 
-    private String balance;
-    private String data;
-
+    private String message;
+    private String date;
 }

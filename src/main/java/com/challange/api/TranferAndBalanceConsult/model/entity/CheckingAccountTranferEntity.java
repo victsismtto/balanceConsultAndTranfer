@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
@@ -12,11 +11,13 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 @Builder
 @Document(collection = "Accounts")
-public class BalanceConsultEntity {
+public class CheckingAccountTranferEntity {
 
-    @Id private String id;
+    private String name;
+    private Boolean isActive;
     private String issuer;
     private String number;
     private Double balance;
-
+    private Double dailyLimitUsed;
+    private String date;
 }

@@ -6,7 +6,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface BalanceConsultRepository extends MongoRepository<BalanceConsultEntity, String> {
-
-    BalanceConsultEntity findByIssuerAndNumber(String issuer, String number);
+public interface CheckingAccountRepository extends MongoRepository<CheckingAccountTranferEntity, String> {
+    CheckingAccountTranferEntity findByName(String name);
 }
