@@ -5,7 +5,10 @@ import com.challange.api.TranferAndBalanceConsult.model.entity.CheckingAccountTr
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface CheckingAccountRepository extends MongoRepository<CheckingAccountTranferEntity, String> {
-    CheckingAccountTranferEntity findByName(String name);
+    Optional<CheckingAccountTranferEntity> findByName(String name);
+    Optional<CheckingAccountTranferEntity> findByIssuerAndNumber(String issuer, String number);
 }

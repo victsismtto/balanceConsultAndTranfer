@@ -14,7 +14,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "Accounts")
 public class BalanceConsultEntity {
 
-    @Id private String id;
+    @Id private String _id;
     private String issuer;
     private String number;
     private Double balance;

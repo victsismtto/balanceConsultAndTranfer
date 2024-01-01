@@ -7,6 +7,6 @@ import com.challange.api.TranferAndBalanceConsult.model.dto.ResponseCheckingAcco
 
 public interface AccountService {
 
-    ResponseBalanceConsultDTO consultBalance(RequestBalanceConsultDTO requestDTO);
+    ResponseBalanceConsultDTO consultBalance(RequestBalanceConsultDTO requestDTO) throws Exception;
     ResponseCheckingAccountTransferDTO checkingAccountTransfer(RequestCheckingAccountTransferDTO requestDTO) throws Exception;
 }

@@ -18,7 +18,7 @@ public class AccountController {
     @Autowired private AccountService service;
 
     @GetMapping("/balance/consult")
-    public ResponseEntity<ResponseBalanceConsultDTO> consultBalance(@RequestBody RequestBalanceConsultDTO requestDTO) {
+    public ResponseEntity<ResponseBalanceConsultDTO> consultBalance(@RequestBody RequestBalanceConsultDTO requestDTO) throws Exception {
         log.info("Entering in the controller - Balance Account");
         ResponseBalanceConsultDTO response = service.consultBalance(requestDTO);
         log.info("leaving in the controller - Balance Account");
