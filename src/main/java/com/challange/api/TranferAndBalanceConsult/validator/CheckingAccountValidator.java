@@ -1,6 +1,8 @@
 package com.challange.api.TranferAndBalanceConsult.validator;
 
+import com.challange.api.TranferAndBalanceConsult.utils.MessageUtils;
 import com.challange.api.TranferAndBalanceConsult.enuns.DailyLimit;
+import com.challange.api.TranferAndBalanceConsult.exception.BusinessException;
 import com.challange.api.TranferAndBalanceConsult.model.dto.RequestCheckingAccountTransferDTO;
 import com.challange.api.TranferAndBalanceConsult.model.entity.CheckingAccountTranferEntity;
 import org.springframework.stereotype.Component;
@@ -14,19 +16,24 @@ public class CheckingAccountValidator {
 
     public void transferAndReceiverAccountValidations(Optional<CheckingAccountTranferEntity> transferEntity, Optional<CheckingAccountTranferEntity> receiveEntity, RequestCheckingAccountTransferDTO requestDTO) throws Exception {
 
+        if (!requestDTO.getCheckingAccountFrom().getIssuer().equals(transferEntity.get().getIssuer())
+        || !requestDTO.getCheckingAccountFrom().getNumber().equals(transferEntity.get().getNumber())) {
+            throw new BusinessException(MessageUtils.WRONG_ISSUER_OR_NUMBER);
+        }
+
         String today = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
         if (!today.equals(transferEntity.get().getDate())) {
             transferEntity.get().setDailyLimitUsed(0.00);
             transferEntity.get().setDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
         }
         if (!transferEntity.get().getIsActive() || !receiveEntity.get().getIsActive()) {
-            throw new Exception();      //tratar esse erro depois
+            throw new BusinessException(MessageUtils.NO_ACTIVE);
         }
         double transferAmount = requestDTO.getTransferAmount();
         double amountAvailable = transferEntity.get().getBalance();
         int compareAmountAvailable = Double.compare(transferAmount, amountAvailable);
         if (compareAmountAvailable > 0) {
-            throw new Exception();      //tratar esse erro depois
+            throw new BusinessException(MessageUtils.NO_AVAILABLE_BALANCE);
         }
         double resultBalance = amountAvailable - transferAmount;
 
@@ -35,7 +42,7 @@ public class CheckingAccountValidator {
         double maxAmountDaily = DailyLimit.MAX_VALUE.toDouble();
         int compareLimitDaily = Double.compare(limitUsed, maxAmountDaily);
         if (compareLimitDaily > 0) {
-            throw new Exception();      //tratar esse erro depois
+            throw new BusinessException(MessageUtils.DAILY_AMOUNT_ALREADY_USED);
         }
         transferEntity.get().setDailyLimitUsed(limitUsed);
         transferEntity.get().setBalance(resultBalance);

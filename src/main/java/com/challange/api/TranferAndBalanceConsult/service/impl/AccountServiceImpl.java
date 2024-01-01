@@ -1,7 +1,7 @@
 package com.challange.api.TranferAndBalanceConsult.service.impl;
 
 import com.challange.api.TranferAndBalanceConsult.client.APICadastroClient;
-import com.challange.api.TranferAndBalanceConsult.enuns.DailyLimit;
+import com.challange.api.TranferAndBalanceConsult.exception.NotFoundException;
 import com.challange.api.TranferAndBalanceConsult.mapper.AccountMapper;
 import com.challange.api.TranferAndBalanceConsult.model.dto.*;
 import com.challange.api.TranferAndBalanceConsult.model.entity.BalanceConsultEntity;
@@ -13,10 +13,7 @@ import com.challange.api.TranferAndBalanceConsult.validator.CheckingAccountValid
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpServerErrorException;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 @Log4j2
@@ -35,7 +32,7 @@ public class AccountServiceImpl implements AccountService {
 
         Optional<BalanceConsultEntity> balanceConsultEntity = consultRepository.findByIssuerAndNumber(requestBalanceDTO.getIssuer(), requestBalanceDTO.getNumber());
         if (balanceConsultEntity.isEmpty()) {
-            throw new ClassNotFoundException();
+            throw new NotFoundException();
         }
         ResponseBalanceConsultDTO responseBalanceConsultDTO = accountMapper.toBalanceConsultResponse(balanceConsultEntity.get());
 
@@ -50,7 +47,7 @@ public class AccountServiceImpl implements AccountService {
         Optional<CheckingAccountTranferEntity> transferEntity = checkingAccountRepository.findByName(apiCadastroDTO.getName());
         Optional<CheckingAccountTranferEntity> receiveEntity = checkingAccountRepository.findByIssuerAndNumber(requestDTO.getCheckingAccountTo().getIssuer(), requestDTO.getCheckingAccountTo().getNumber());
         if (transferEntity.isEmpty() || receiveEntity.isEmpty()) {
-            throw new Exception();
+            throw new NotFoundException();
         }
         checkingAccountValidator.transferAndReceiverAccountValidations(transferEntity, receiveEntity, requestDTO);
         //Mock BACEN here

@@ -1,5 +1,6 @@
 package com.challange.api.TranferAndBalanceConsult.model.dto;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,5 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class APICadastroDTO {
+
+    @NotNull
     private String name;
 }
