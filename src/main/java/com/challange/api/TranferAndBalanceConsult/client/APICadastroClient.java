@@ -1,16 +1,24 @@
 package com.challange.api.TranferAndBalanceConsult.client;
 
+import com.challange.api.TranferAndBalanceConsult.exception.BusinessException;
 import com.challange.api.TranferAndBalanceConsult.model.dto.APICadastroDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.web.client.RestTemplate;
 
-@Component
+@Retryable(maxAttemptsExpression = "retry.max-attempts",
+           backoff =
+               @Backoff(delayExpression = "retry.delay",
+               maxDelay = 2000,
+               multiplier = 2))
+@Configuration
 public class APICadastroClient {
 
     @Value("${rest.cadastro}")
