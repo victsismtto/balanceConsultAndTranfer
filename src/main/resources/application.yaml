@@ -1,5 +1,11 @@
 spring:
   data:
     mongodb:
-      uri: mongodb+srv://{username}:{password}@cluster0.io3s2ai.mongodb.net/
+      uri: mongodb+srv://<username>:<password>@cluster0.io3s2ai.mongodb.net/
       database: ApiDatabase
+
+server:
+  port: 8080
+
+rest:
+  cadastro: http://localhost:8082/cadastro/consult/

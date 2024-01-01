@@ -13,15 +13,13 @@ import java.util.Optional;
 public class CheckingAccountValidator {
 
     public void transferAndReceiverAccountValidations(Optional<CheckingAccountTranferEntity> transferEntity, Optional<CheckingAccountTranferEntity> receiveEntity, RequestCheckingAccountTransferDTO requestDTO) throws Exception {
-        if (transferEntity.isEmpty() || receiveEntity.isEmpty()) {
-            throw new Exception();
-        }
+
         String today = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
         if (!today.equals(transferEntity.get().getDate())) {
             transferEntity.get().setDailyLimitUsed(0.00);
             transferEntity.get().setDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
         }
-        if (!transferEntity.get().getIsActive()) {
+        if (!transferEntity.get().getIsActive() || !receiveEntity.get().getIsActive()) {
             throw new Exception();      //tratar esse erro depois
         }
         double transferAmount = requestDTO.getTransferAmount();

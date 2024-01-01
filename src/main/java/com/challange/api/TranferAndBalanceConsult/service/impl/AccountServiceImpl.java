@@ -13,6 +13,7 @@ import com.challange.api.TranferAndBalanceConsult.validator.CheckingAccountValid
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpServerErrorException;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -34,7 +35,7 @@ public class AccountServiceImpl implements AccountService {
 
         Optional<BalanceConsultEntity> balanceConsultEntity = consultRepository.findByIssuerAndNumber(requestBalanceDTO.getIssuer(), requestBalanceDTO.getNumber());
         if (balanceConsultEntity.isEmpty()) {
-            throw new Exception();
+            throw new ClassNotFoundException();
         }
         ResponseBalanceConsultDTO responseBalanceConsultDTO = accountMapper.toBalanceConsultResponse(balanceConsultEntity.get());
 
@@ -48,6 +49,9 @@ public class AccountServiceImpl implements AccountService {
         APICadastroDTO apiCadastroDTO = cadastroClient.requestToAPICadastro(requestDTO.getIdBank()); //mock API Cadastro
         Optional<CheckingAccountTranferEntity> transferEntity = checkingAccountRepository.findByName(apiCadastroDTO.getName());
         Optional<CheckingAccountTranferEntity> receiveEntity = checkingAccountRepository.findByIssuerAndNumber(requestDTO.getCheckingAccountTo().getIssuer(), requestDTO.getCheckingAccountTo().getNumber());
+        if (transferEntity.isEmpty() || receiveEntity.isEmpty()) {
+            throw new Exception();
+        }
         checkingAccountValidator.transferAndReceiverAccountValidations(transferEntity, receiveEntity, requestDTO);
         //Mock BACEN here
         checkingAccountRepository.save(transferEntity.get());
