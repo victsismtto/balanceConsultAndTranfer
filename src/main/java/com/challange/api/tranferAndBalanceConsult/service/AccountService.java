@@ -9,4 +9,6 @@ public interface AccountService {
 
     ResponseBalanceConsultDTO consultBalance(RequestBalanceConsultDTO requestDTO) throws Exception;
     ResponseCheckingAccountTransferDTO checkingAccountTransfer(RequestCheckingAccountTransferDTO requestDTO) throws Exception;
+
+    void schedule();
 }

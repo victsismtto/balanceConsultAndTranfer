@@ -8,6 +8,8 @@ import com.challange.api.tranferAndBalanceConsult.service.AccountService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 
 @Log4j2
@@ -31,5 +33,13 @@ public class AccountController {
         ResponseCheckingAccountTransferDTO response = service.checkingAccountTransfer(requestDTO);
         log.info("leaving in the controller - Account transfer");
         return ResponseEntity.ok().body(response);
+    }
+
+    @PatchMapping("/bacen")
+    @Scheduled(fixedRate = 60000)
+    public void schedulingBacenErrors() throws Exception {
+        log.info("Entering in the controller - Schedule");
+        service.schedule();
+        log.info("leaving in the controller - Schedule");
     }
 }

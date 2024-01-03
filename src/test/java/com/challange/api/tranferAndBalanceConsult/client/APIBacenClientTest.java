@@ -69,8 +69,8 @@ public class APIBacenClientTest {
         Mockito.when(restTemplate.exchange(Mockito.any(String.class), Mockito.any(HttpMethod.class),
                 Mockito.any(HttpEntity.class), Mockito.any(Class.class))).thenThrow(new HttpClientErrorException(HttpStatus.NOT_FOUND));
 
-        Assertions.assertThrows(NotFoundException.class, () ->
-                client.requestToAPIBacen (checkingAccountTo, checkingAccountFrom));
+        Assertions.assertDoesNotThrow(
+            () -> client.requestToAPIBacen (checkingAccountTo, checkingAccountFrom));
     }
 
     @Test
