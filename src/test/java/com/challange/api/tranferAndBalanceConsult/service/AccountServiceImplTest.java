@@ -1,5 +1,6 @@
 package com.challange.api.tranferAndBalanceConsult.service;
 
+import com.challange.api.tranferAndBalanceConsult.client.APIBacenClient;
 import com.challange.api.tranferAndBalanceConsult.client.APICadastroClient;
 import com.challange.api.tranferAndBalanceConsult.exception.NotFoundException;
 import com.challange.api.tranferAndBalanceConsult.mapper.AccountMapper;
@@ -27,6 +28,9 @@ public class AccountServiceImplTest {
 
     @Mock
     private APICadastroClient cadastroClient;
+
+    @Mock
+    private APIBacenClient bacenClient;
 
     @Mock
     private TransferAndBalanceRepository transferAndBalanceRepository;
