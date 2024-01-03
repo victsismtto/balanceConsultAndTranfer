@@ -9,3 +9,4 @@ server:
 
 rest:
   cadastro: http://localhost:8082/cadastro/consult/
+  bacen: http://localhost:8081/transaction/informed
