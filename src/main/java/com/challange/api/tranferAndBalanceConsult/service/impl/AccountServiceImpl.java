@@ -55,10 +55,7 @@ public class AccountServiceImpl implements AccountService {
         BacenTransferEntity bacenTransferEntity = accountMapper.toBacenEntity(requestDTO);
         bacenRepository.save(bacenTransferEntity);
         String response = bacenClient.requestToAPIBacen(requestDTO.getCheckingAccountTo(), requestDTO.getCheckingAccountFrom());
-        if (response != null) {
-            bacenTransferEntity.setCompleted(true);
-            bacenRepository.save(bacenTransferEntity);
-        }
+        verificationTransfer(response, bacenTransferEntity);
         transferAndBalanceRepository.save(transferEntity.get());
         transferAndBalanceRepository.save(receiveEntity.get());
         return accountMapper.toCheckingAccountTransferResponse();
@@ -70,12 +67,15 @@ public class AccountServiceImpl implements AccountService {
         if (transferEntity.isPresent()){
             for (BacenTransferEntity transfer : transferEntity.get()) {
                 String bacenResponse = bacenClient.requestToAPIBacen(transfer.getAccountTo(), transfer.getAccountFrom());
-                if (bacenResponse != null) {
-                    transfer.setCompleted(true);
-                    bacenRepository.save(transfer);
-                }
-
+                verificationTransfer(bacenResponse, transfer);
             }
+        }
+    }
+
+    private void verificationTransfer(String response, BacenTransferEntity entity) {
+        if (response != null) {
+            entity.setCompleted(true);
+            bacenRepository.save(entity);
         }
     }
 }
