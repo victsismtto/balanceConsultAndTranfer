@@ -6,4 +6,6 @@ public class MessageUtils {
     public static final String NO_AVAILABLE_BALANCE = "The transfer amount is greater than the balance";
     public static final String DAILY_AMOUNT_ALREADY_USED = "The transfer amount is greater than the balance";
     public static final String WRONG_ISSUER_OR_NUMBER = "The transfer account has invalid parameters";
+
+    public static final String SERVICE_UNAVAILABLE = "The API cadastro is temporally unavailable";
 }

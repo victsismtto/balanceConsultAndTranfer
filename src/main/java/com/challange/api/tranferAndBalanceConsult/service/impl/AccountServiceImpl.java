@@ -1,5 +1,6 @@
 package com.challange.api.tranferAndBalanceConsult.service.impl;
 
+import com.challange.api.tranferAndBalanceConsult.client.APIBacenClient;
 import com.challange.api.tranferAndBalanceConsult.client.APICadastroClient;
 import com.challange.api.tranferAndBalanceConsult.exception.NotFoundException;
 import com.challange.api.tranferAndBalanceConsult.mapper.AccountMapper;
@@ -19,6 +20,8 @@ import java.util.Optional;
 public class AccountServiceImpl implements AccountService {
 
     @Autowired private APICadastroClient cadastroClient;
+
+    @Autowired private APIBacenClient bacenClient;
     @Autowired private AccountMapper accountMapper;
     @Autowired private TransferAndBalanceRepository transferAndBalanceRepository;
     @Autowired private CheckingAccountValidator checkingAccountValidator;
@@ -46,7 +49,7 @@ public class AccountServiceImpl implements AccountService {
             throw new NotFoundException();
         }
         checkingAccountValidator.transferAndReceiverAccountValidations(transferEntity, receiveEntity, requestDTO);
-        //Mock BACEN here
+        bacenClient.requestToAPIBacen(requestDTO.getCheckingAccountTo(), requestDTO.getCheckingAccountFrom());
         transferAndBalanceRepository.save(transferEntity.get());
         transferAndBalanceRepository.save(receiveEntity.get());
         return accountMapper.toCheckingAccountTransferResponse();
