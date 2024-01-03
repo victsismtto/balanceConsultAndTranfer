@@ -30,13 +30,13 @@ public class AccountServiceImplTest {
     private APICadastroClient cadastroClient;
 
     @Mock
+    private APIBacenClient bacenClient;
+
+    @Mock
     private TransferAndBalanceRepository transferAndBalanceRepository;
 
     @Mock
     private CheckingAccountValidator checkingAccountValidator;
-
-    @Mock
-    private APIBacenClient bacenClient;
 
     @Mock
     private AccountMapper accountMapper;
