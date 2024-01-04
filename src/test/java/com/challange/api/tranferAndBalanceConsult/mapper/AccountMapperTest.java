@@ -2,8 +2,8 @@ package com.challange.api.tranferAndBalanceConsult.mapper;
 
 import com.challange.api.tranferAndBalanceConsult.model.CheckingAccountFrom;
 import com.challange.api.tranferAndBalanceConsult.model.CheckingAccountTo;
-import com.challange.api.tranferAndBalanceConsult.model.dto.RequestCheckingAccountTransferDTO;
-import com.challange.api.tranferAndBalanceConsult.model.entity.TransferAndBalanceConsultEntity;
+import com.challange.api.tranferAndBalanceConsult.model.dto.RequestCheckingAccountDTO;
+import com.challange.api.tranferAndBalanceConsult.model.entity.AccountsEntity;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,7 +18,7 @@ public class AccountMapperTest {
 
     @Test
     void toBalanceConsultResponse() {
-        TransferAndBalanceConsultEntity balanceConsultEntity = TransferAndBalanceConsultEntity.builder()
+        AccountsEntity balanceConsultEntity = AccountsEntity.builder()
                 .balance(200.00)
                 .issuer("0001")
                 .number("1234")
@@ -46,7 +46,7 @@ public class AccountMapperTest {
             .number("1234")
             .build();
 
-        RequestCheckingAccountTransferDTO requestDTO = RequestCheckingAccountTransferDTO.builder()
+        RequestCheckingAccountDTO requestDTO = RequestCheckingAccountDTO.builder()
             .checkingAccountFrom(checkingAccountFrom)
             .checkingAccountTo(checkingAccountTo)
             .transferAmount(200.00)

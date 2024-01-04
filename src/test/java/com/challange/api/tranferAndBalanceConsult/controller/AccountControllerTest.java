@@ -3,7 +3,7 @@ package com.challange.api.tranferAndBalanceConsult.controller;
 import com.challange.api.tranferAndBalanceConsult.model.CheckingAccountFrom;
 import com.challange.api.tranferAndBalanceConsult.model.CheckingAccountTo;
 import com.challange.api.tranferAndBalanceConsult.model.dto.RequestBalanceConsultDTO;
-import com.challange.api.tranferAndBalanceConsult.model.dto.RequestCheckingAccountTransferDTO;
+import com.challange.api.tranferAndBalanceConsult.model.dto.RequestCheckingAccountDTO;
 import com.challange.api.tranferAndBalanceConsult.service.AccountService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -30,7 +30,7 @@ public class AccountControllerTest {
                 .number("1234")
                 .build();
 
-        RequestCheckingAccountTransferDTO requestDTO = RequestCheckingAccountTransferDTO.builder()
+        RequestCheckingAccountDTO requestDTO = RequestCheckingAccountDTO.builder()
                 .idBank("1")
                 .transferAmount(200.00)
                 .checkingAccountFrom(checkingAccountFrom)
@@ -51,5 +51,12 @@ public class AccountControllerTest {
 
         Assertions.assertDoesNotThrow(
                 () -> controller.consultBalance(requestDTO));
+    }
+
+    @Test
+    void testShouldSchedule() {
+
+        Assertions.assertDoesNotThrow(
+                () -> controller.schedulingBacenErrors());
     }
 }

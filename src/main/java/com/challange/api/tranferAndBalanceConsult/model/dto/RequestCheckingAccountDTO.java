@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class RequestCheckingAccountTransferDTO {
+public class RequestCheckingAccountDTO {
 
     @NotNull
     private String idBank;

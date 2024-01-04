@@ -3,8 +3,8 @@ package com.challange.api.tranferAndBalanceConsult.validator;
 import com.challange.api.tranferAndBalanceConsult.exception.BusinessException;
 import com.challange.api.tranferAndBalanceConsult.model.CheckingAccountFrom;
 import com.challange.api.tranferAndBalanceConsult.model.CheckingAccountTo;
-import com.challange.api.tranferAndBalanceConsult.model.dto.RequestCheckingAccountTransferDTO;
-import com.challange.api.tranferAndBalanceConsult.model.entity.TransferAndBalanceConsultEntity;
+import com.challange.api.tranferAndBalanceConsult.model.dto.RequestCheckingAccountDTO;
+import com.challange.api.tranferAndBalanceConsult.model.entity.AccountsEntity;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,7 +13,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
 public class CheckingAccountValidatorTest {
@@ -33,14 +32,14 @@ public class CheckingAccountValidatorTest {
             .number("1234")
             .build();
 
-        RequestCheckingAccountTransferDTO requestDTO = RequestCheckingAccountTransferDTO.builder()
+        RequestCheckingAccountDTO requestDTO = RequestCheckingAccountDTO.builder()
             .checkingAccountTo(checkingAccountTo)
             .checkingAccountFrom(checkingAccountFrom)
             .transferAmount(200.00)
             .idBank("1")
             .build();
 
-        TransferAndBalanceConsultEntity transferEntity = TransferAndBalanceConsultEntity.builder()
+        AccountsEntity transferEntity = AccountsEntity.builder()
             .name("Client_1")
             .isActive(true)
             .date("01-01-2023")
@@ -50,7 +49,7 @@ public class CheckingAccountValidatorTest {
             .dailyLimitUsed(0.00)
             .build();
 
-        TransferAndBalanceConsultEntity receiverEntity = TransferAndBalanceConsultEntity.builder()
+        AccountsEntity receiverEntity = AccountsEntity.builder()
             .name("Client_2")
             .isActive(true)
             .date("01-01-2023")
@@ -76,14 +75,14 @@ public class CheckingAccountValidatorTest {
                 .number("1234")
                 .build();
 
-        RequestCheckingAccountTransferDTO requestDTO = RequestCheckingAccountTransferDTO.builder()
+        RequestCheckingAccountDTO requestDTO = RequestCheckingAccountDTO.builder()
                 .checkingAccountTo(checkingAccountTo)
                 .checkingAccountFrom(checkingAccountFrom)
                 .transferAmount(200.00)
                 .idBank("1")
                 .build();
 
-        TransferAndBalanceConsultEntity transferEntity = TransferAndBalanceConsultEntity.builder()
+        AccountsEntity transferEntity = AccountsEntity.builder()
                 .name("Client_1")
                 .isActive(true)
                 .date("01-01-2023")
@@ -93,7 +92,7 @@ public class CheckingAccountValidatorTest {
                 .dailyLimitUsed(0.00)
                 .build();
 
-        TransferAndBalanceConsultEntity receiverEntity = TransferAndBalanceConsultEntity.builder()
+        AccountsEntity receiverEntity = AccountsEntity.builder()
                 .name("Client_2")
                 .isActive(true)
                 .date("01-01-2023")
@@ -119,14 +118,14 @@ public class CheckingAccountValidatorTest {
                 .number("1234")
                 .build();
 
-        RequestCheckingAccountTransferDTO requestDTO = RequestCheckingAccountTransferDTO.builder()
+        RequestCheckingAccountDTO requestDTO = RequestCheckingAccountDTO.builder()
                 .checkingAccountTo(checkingAccountTo)
                 .checkingAccountFrom(checkingAccountFrom)
                 .transferAmount(200.00)
                 .idBank("1")
                 .build();
 
-        TransferAndBalanceConsultEntity transferEntity = TransferAndBalanceConsultEntity.builder()
+        AccountsEntity transferEntity = AccountsEntity.builder()
                 .name("Client_1")
                 .isActive(false)
                 .date("01-01-2023")
@@ -136,7 +135,7 @@ public class CheckingAccountValidatorTest {
                 .dailyLimitUsed(0.00)
                 .build();
 
-        TransferAndBalanceConsultEntity receiverEntity = TransferAndBalanceConsultEntity.builder()
+        AccountsEntity receiverEntity = AccountsEntity.builder()
                 .name("Client_2")
                 .isActive(false)
                 .date("01-01-2023")
@@ -162,14 +161,14 @@ public class CheckingAccountValidatorTest {
                 .number("1234")
                 .build();
 
-        RequestCheckingAccountTransferDTO requestDTO = RequestCheckingAccountTransferDTO.builder()
+        RequestCheckingAccountDTO requestDTO = RequestCheckingAccountDTO.builder()
                 .checkingAccountTo(checkingAccountTo)
                 .checkingAccountFrom(checkingAccountFrom)
                 .transferAmount(500.00)
                 .idBank("1")
                 .build();
 
-        TransferAndBalanceConsultEntity transferEntity = TransferAndBalanceConsultEntity.builder()
+        AccountsEntity transferEntity = AccountsEntity.builder()
                 .name("Client_1")
                 .isActive(true)
                 .date("01-01-2023")
@@ -179,7 +178,7 @@ public class CheckingAccountValidatorTest {
                 .dailyLimitUsed(0.00)
                 .build();
 
-        TransferAndBalanceConsultEntity receiverEntity = TransferAndBalanceConsultEntity.builder()
+        AccountsEntity receiverEntity = AccountsEntity.builder()
                 .name("Client_2")
                 .isActive(true)
                 .date("01-01-2023")
@@ -207,14 +206,14 @@ public class CheckingAccountValidatorTest {
                 .number("1234")
                 .build();
 
-        RequestCheckingAccountTransferDTO requestDTO = RequestCheckingAccountTransferDTO.builder()
+        RequestCheckingAccountDTO requestDTO = RequestCheckingAccountDTO.builder()
                 .checkingAccountTo(checkingAccountTo)
                 .checkingAccountFrom(checkingAccountFrom)
                 .transferAmount(200.00)
                 .idBank("1")
                 .build();
 
-        TransferAndBalanceConsultEntity transferEntity = TransferAndBalanceConsultEntity.builder()
+        AccountsEntity transferEntity = AccountsEntity.builder()
                 .name("Client_1")
                 .isActive(true)
                 .date(today)
@@ -224,7 +223,7 @@ public class CheckingAccountValidatorTest {
                 .dailyLimitUsed(900.00)
                 .build();
 
-        TransferAndBalanceConsultEntity receiverEntity = TransferAndBalanceConsultEntity.builder()
+        AccountsEntity receiverEntity = AccountsEntity.builder()
                 .name("Client_2")
                 .isActive(true)
                 .date(today)

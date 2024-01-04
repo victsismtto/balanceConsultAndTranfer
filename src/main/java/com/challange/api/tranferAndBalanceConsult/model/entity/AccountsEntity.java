@@ -12,7 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 @Builder
 @Document(collection = "Accounts")
-public class TransferAndBalanceConsultEntity {
+public class AccountsEntity {
 
     @Id
     private String _id;
