@@ -130,7 +130,7 @@ public class AccountServiceImplTest {
         Mockito.when(cadastroClient.requestToAPICadastro("1")).thenReturn(cadastroDTO);
         Mockito.when(transferAndBalanceRepository.findByName(cadastroDTO.getName())).thenReturn(transferEntity);
         Mockito.when(transferAndBalanceRepository.findByIssuerAndNumber(requestDTO.getCheckingAccountTo().getIssuer(), requestDTO.getCheckingAccountFrom().getNumber())).thenReturn(transferEntity);
-        Mockito.when(bacenClient.requestToAPIBacen(checkingAccountTo, checkingAccountFrom)).thenReturn("resposta");
+        Mockito.when(bacenClient.requestToAPIBacen(checkingAccountTo, checkingAccountFrom, bacenTransferEntity.getTransactionAmount())).thenReturn("resposta");
         Mockito.when(accountMapper.toBacenEntity(requestDTO)).thenReturn(bacenTransferEntity);
 
         Assertions.assertDoesNotThrow(
@@ -198,7 +198,7 @@ public class AccountServiceImplTest {
         List<BacenTransferEntity> listTransfer = new ArrayList<>();
         listTransfer.add(transferEntity);
 
-        Mockito.when(bacenClient.requestToAPIBacen(checkingAccountTo, checkingAccountFrom)).thenReturn("resposta");
+        Mockito.when(bacenClient.requestToAPIBacen(checkingAccountTo, checkingAccountFrom, transferEntity.getTransactionAmount())).thenReturn("resposta");
         Mockito.when(bacenRepository.findByCompletedIsFalse()).thenReturn(Optional.of(listTransfer));
         Assertions.assertDoesNotThrow(
                 () -> service.schedule());

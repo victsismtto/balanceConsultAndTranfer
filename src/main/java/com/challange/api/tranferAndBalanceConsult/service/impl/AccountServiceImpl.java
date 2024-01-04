@@ -51,10 +51,10 @@ public class AccountServiceImpl implements AccountService {
         if (transferEntity.isEmpty() || receiveEntity.isEmpty()) {
             throw new NotFoundException();
         }
-        checkingAccountValidator.transferAndReceiverAccountValidations(transferEntity, receiveEntity, requestDTO);
+        checkingAccountValidator.transferAndReceiverAccountValidations(transferEntity.get(), receiveEntity.get(), requestDTO);
         BacenTransferEntity bacenTransferEntity = accountMapper.toBacenEntity(requestDTO);
         bacenRepository.save(bacenTransferEntity);
-        String response = bacenClient.requestToAPIBacen(requestDTO.getCheckingAccountTo(), requestDTO.getCheckingAccountFrom());
+        String response = bacenClient.requestToAPIBacen(requestDTO.getCheckingAccountTo(), requestDTO.getCheckingAccountFrom(), requestDTO.getTransferAmount());
         verificationTransfer(response, bacenTransferEntity);
         transferAndBalanceRepository.save(transferEntity.get());
         transferAndBalanceRepository.save(receiveEntity.get());
@@ -66,7 +66,7 @@ public class AccountServiceImpl implements AccountService {
         Optional<List<BacenTransferEntity>> transferEntity = bacenRepository.findByCompletedIsFalse();
         if (transferEntity.isPresent()){
             for (BacenTransferEntity transfer : transferEntity.get()) {
-                String bacenResponse = bacenClient.requestToAPIBacen(transfer.getAccountTo(), transfer.getAccountFrom());
+                String bacenResponse = bacenClient.requestToAPIBacen(transfer.getAccountTo(), transfer.getAccountFrom(), transfer.getTransactionAmount());
                 verificationTransfer(bacenResponse, transfer);
             }
         }

@@ -1,10 +1,8 @@
 package com.challange.api.tranferAndBalanceConsult.client;
 
-import com.challange.api.tranferAndBalanceConsult.exception.NotFoundException;
 import com.challange.api.tranferAndBalanceConsult.exception.ServiceUnavailableException;
 import com.challange.api.tranferAndBalanceConsult.model.CheckingAccountFrom;
 import com.challange.api.tranferAndBalanceConsult.model.CheckingAccountTo;
-import com.challange.api.tranferAndBalanceConsult.model.dto.APICadastroDTO;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -42,12 +40,14 @@ public class APIBacenClientTest {
                 .number("1234")
                 .build();
 
+        Double transferAmount = 200.00;
+
         ResponseEntity<String> responseEntity = new ResponseEntity<>("teste", new HttpHeaders(), HttpStatus.OK);
 
         Mockito.when(restTemplate.exchange(Mockito.any(String.class), Mockito.any(HttpMethod.class),
                 Mockito.any(HttpEntity.class) ,Mockito.any(Class.class))).thenReturn(responseEntity);
 
-        client.requestToAPIBacen(checkingAccountTo, checkingAccountFrom);
+        client.requestToAPIBacen(checkingAccountTo, checkingAccountFrom, transferAmount);
     }
 
     @Test
@@ -65,12 +65,14 @@ public class APIBacenClientTest {
                 .number("1234")
                 .build();
 
+        Double transferAmount = 200.00;
+
 
         Mockito.when(restTemplate.exchange(Mockito.any(String.class), Mockito.any(HttpMethod.class),
                 Mockito.any(HttpEntity.class), Mockito.any(Class.class))).thenThrow(new HttpClientErrorException(HttpStatus.NOT_FOUND));
 
         Assertions.assertDoesNotThrow(
-            () -> client.requestToAPIBacen (checkingAccountTo, checkingAccountFrom));
+            () -> client.requestToAPIBacen (checkingAccountTo, checkingAccountFrom, transferAmount));
     }
 
     @Test
@@ -88,11 +90,13 @@ public class APIBacenClientTest {
                 .number("1234")
                 .build();
 
+        Double transferAmount = 200.00;
+
 
         Mockito.when(restTemplate.exchange(Mockito.any(String.class), Mockito.any(HttpMethod.class),
                 Mockito.any(HttpEntity.class), Mockito.any(Class.class))).thenThrow(new HttpServerErrorException(HttpStatus.SERVICE_UNAVAILABLE));
 
         Assertions.assertThrows(ServiceUnavailableException.class, () ->
-                client.requestToAPIBacen (checkingAccountTo, checkingAccountFrom));
+                client.requestToAPIBacen (checkingAccountTo, checkingAccountFrom, transferAmount));
     }
 }

@@ -29,13 +29,14 @@ public class APIBacenClient {
     private RestTemplate restTemplate;
 
     @Retry(name = "clientRetry")
-    public String requestToAPIBacen(CheckingAccountTo accountTo, CheckingAccountFrom accountFrom) {
+    public String requestToAPIBacen(CheckingAccountTo accountTo, CheckingAccountFrom accountFrom, Double transferAmount) {
         try {
             HttpHeaders headers = new HttpHeaders();
             headers.set("issuerTo", accountTo.getIssuer());
             headers.set("numberTo", accountTo.getNumber());
             headers.set("issuerFrom", accountFrom.getIssuer());
             headers.set("numberFrom", accountFrom.getNumber());
+            headers.set("transferAmount", String.valueOf(transferAmount));
             ResponseEntity<String> response = restTemplate.exchange(bacenEndpoint, HttpMethod.POST, new HttpEntity<>(headers), String.class);
             log.info(response.getBody());
             return response.getBody();

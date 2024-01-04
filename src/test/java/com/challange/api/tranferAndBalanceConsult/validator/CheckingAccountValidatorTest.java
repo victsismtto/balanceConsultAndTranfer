@@ -40,7 +40,7 @@ public class CheckingAccountValidatorTest {
             .idBank("1")
             .build();
 
-        Optional<TransferAndBalanceConsultEntity> transferEntity = Optional.ofNullable(TransferAndBalanceConsultEntity.builder()
+        TransferAndBalanceConsultEntity transferEntity = TransferAndBalanceConsultEntity.builder()
             .name("Client_1")
             .isActive(true)
             .date("01-01-2023")
@@ -48,9 +48,9 @@ public class CheckingAccountValidatorTest {
             .issuer("0001")
             .number("1234")
             .dailyLimitUsed(0.00)
-            .build());
+            .build();
 
-        Optional<TransferAndBalanceConsultEntity> receiverEntity = Optional.ofNullable(TransferAndBalanceConsultEntity.builder()
+        TransferAndBalanceConsultEntity receiverEntity = TransferAndBalanceConsultEntity.builder()
             .name("Client_2")
             .isActive(true)
             .date("01-01-2023")
@@ -58,7 +58,7 @@ public class CheckingAccountValidatorTest {
             .number("0123")
             .balance(200.00)
             .dailyLimitUsed(0.00)
-            .build());
+            .build();
 
         Assertions.assertDoesNotThrow(
             () -> validator.transferAndReceiverAccountValidations(transferEntity, receiverEntity, requestDTO));
@@ -83,7 +83,7 @@ public class CheckingAccountValidatorTest {
                 .idBank("1")
                 .build();
 
-        Optional<TransferAndBalanceConsultEntity> transferEntity = Optional.ofNullable(TransferAndBalanceConsultEntity.builder()
+        TransferAndBalanceConsultEntity transferEntity = TransferAndBalanceConsultEntity.builder()
                 .name("Client_1")
                 .isActive(true)
                 .date("01-01-2023")
@@ -91,9 +91,9 @@ public class CheckingAccountValidatorTest {
                 .issuer("0002")
                 .number("0123")
                 .dailyLimitUsed(0.00)
-                .build());
+                .build();
 
-        Optional<TransferAndBalanceConsultEntity> receiverEntity = Optional.ofNullable(TransferAndBalanceConsultEntity.builder()
+        TransferAndBalanceConsultEntity receiverEntity = TransferAndBalanceConsultEntity.builder()
                 .name("Client_2")
                 .isActive(true)
                 .date("01-01-2023")
@@ -101,7 +101,7 @@ public class CheckingAccountValidatorTest {
                 .number("0123")
                 .balance(200.00)
                 .dailyLimitUsed(0.00)
-                .build());
+                .build();
 
         Assertions.assertThrows(BusinessException.class,
                 () -> validator.transferAndReceiverAccountValidations(transferEntity, receiverEntity, requestDTO));
@@ -126,7 +126,7 @@ public class CheckingAccountValidatorTest {
                 .idBank("1")
                 .build();
 
-        Optional<TransferAndBalanceConsultEntity> transferEntity = Optional.ofNullable(TransferAndBalanceConsultEntity.builder()
+        TransferAndBalanceConsultEntity transferEntity = TransferAndBalanceConsultEntity.builder()
                 .name("Client_1")
                 .isActive(false)
                 .date("01-01-2023")
@@ -134,9 +134,9 @@ public class CheckingAccountValidatorTest {
                 .issuer("0001")
                 .number("1234")
                 .dailyLimitUsed(0.00)
-                .build());
+                .build();
 
-        Optional<TransferAndBalanceConsultEntity> receiverEntity = Optional.ofNullable(TransferAndBalanceConsultEntity.builder()
+        TransferAndBalanceConsultEntity receiverEntity = TransferAndBalanceConsultEntity.builder()
                 .name("Client_2")
                 .isActive(false)
                 .date("01-01-2023")
@@ -144,7 +144,7 @@ public class CheckingAccountValidatorTest {
                 .number("0123")
                 .balance(200.00)
                 .dailyLimitUsed(0.00)
-                .build());
+                .build();
 
         Assertions.assertThrows(BusinessException.class,
                 () -> validator.transferAndReceiverAccountValidations(transferEntity, receiverEntity, requestDTO));
@@ -169,7 +169,7 @@ public class CheckingAccountValidatorTest {
                 .idBank("1")
                 .build();
 
-        Optional<TransferAndBalanceConsultEntity> transferEntity = Optional.ofNullable(TransferAndBalanceConsultEntity.builder()
+        TransferAndBalanceConsultEntity transferEntity = TransferAndBalanceConsultEntity.builder()
                 .name("Client_1")
                 .isActive(true)
                 .date("01-01-2023")
@@ -177,9 +177,9 @@ public class CheckingAccountValidatorTest {
                 .issuer("0001")
                 .number("1234")
                 .dailyLimitUsed(0.00)
-                .build());
+                .build();
 
-        Optional<TransferAndBalanceConsultEntity> receiverEntity = Optional.ofNullable(TransferAndBalanceConsultEntity.builder()
+        TransferAndBalanceConsultEntity receiverEntity = TransferAndBalanceConsultEntity.builder()
                 .name("Client_2")
                 .isActive(true)
                 .date("01-01-2023")
@@ -187,7 +187,7 @@ public class CheckingAccountValidatorTest {
                 .number("0123")
                 .balance(200.00)
                 .dailyLimitUsed(0.00)
-                .build());
+                .build();
 
         Assertions.assertThrows(BusinessException.class,
                 () -> validator.transferAndReceiverAccountValidations(transferEntity, receiverEntity, requestDTO));
@@ -214,7 +214,7 @@ public class CheckingAccountValidatorTest {
                 .idBank("1")
                 .build();
 
-        Optional<TransferAndBalanceConsultEntity> transferEntity = Optional.ofNullable(TransferAndBalanceConsultEntity.builder()
+        TransferAndBalanceConsultEntity transferEntity = TransferAndBalanceConsultEntity.builder()
                 .name("Client_1")
                 .isActive(true)
                 .date(today)
@@ -222,9 +222,9 @@ public class CheckingAccountValidatorTest {
                 .issuer("0001")
                 .number("1234")
                 .dailyLimitUsed(900.00)
-                .build());
+                .build();
 
-        Optional<TransferAndBalanceConsultEntity> receiverEntity = Optional.ofNullable(TransferAndBalanceConsultEntity.builder()
+        TransferAndBalanceConsultEntity receiverEntity = TransferAndBalanceConsultEntity.builder()
                 .name("Client_2")
                 .isActive(true)
                 .date(today)
@@ -232,7 +232,7 @@ public class CheckingAccountValidatorTest {
                 .number("0123")
                 .balance(200.00)
                 .dailyLimitUsed(0.00)
-                .build());
+                .build();
 
         Assertions.assertThrows(BusinessException.class,
                 () -> validator.transferAndReceiverAccountValidations(transferEntity, receiverEntity, requestDTO));
