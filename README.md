@@ -32,7 +32,7 @@ Para chamar todos os endpoints dessa aplicação, precisa baixar o MockCadastro 
    
    git clone https://github.com/victsismtto/APIMockCadastro
    
-  git clone https://github.com/victsismtto/APIMockBacen.git
+   git clone https://github.com/victsismtto/APIMockBacen.git
 
 
 ## configuration
