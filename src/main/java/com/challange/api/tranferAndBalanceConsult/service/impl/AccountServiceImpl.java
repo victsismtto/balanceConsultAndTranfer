@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 
 @Log4j2
 @Service
@@ -46,18 +47,18 @@ public class AccountServiceImpl implements AccountService {
     public ResponseCheckingAccountTransferDTO checkingAccountTransfer(RequestCheckingAccountTransferDTO requestDTO) throws Exception {
 
         APICadastroDTO apiCadastroDTO = cadastroClient.requestToAPICadastro(requestDTO.getIdBank());
-        Optional<TransferAndBalanceConsultEntity> transferEntity = transferAndBalanceRepository.findByName(apiCadastroDTO.getName());
-        Optional<TransferAndBalanceConsultEntity> receiveEntity = transferAndBalanceRepository.findByIssuerAndNumber(requestDTO.getCheckingAccountTo().getIssuer(), requestDTO.getCheckingAccountTo().getNumber());
-        if (transferEntity.isEmpty() || receiveEntity.isEmpty()) {
+        CompletableFuture<Optional<TransferAndBalanceConsultEntity>> transferEntity = CompletableFuture.supplyAsync(() -> transferAndBalanceRepository.findByName(apiCadastroDTO.getName())) ;
+        CompletableFuture<Optional<TransferAndBalanceConsultEntity>> receiveEntity = CompletableFuture.supplyAsync(() -> transferAndBalanceRepository.findByIssuerAndNumber(requestDTO.getCheckingAccountTo().getIssuer(), requestDTO.getCheckingAccountTo().getNumber()));
+        if (transferEntity.get().isEmpty() || receiveEntity.get().isEmpty()) {
             throw new NotFoundException();
         }
-        checkingAccountValidator.transferAndReceiverAccountValidations(transferEntity.get(), receiveEntity.get(), requestDTO);
+        checkingAccountValidator.transferAndReceiverAccountValidations(transferEntity.get().get(), receiveEntity.get().get(), requestDTO);
         BacenTransferEntity bacenTransferEntity = accountMapper.toBacenEntity(requestDTO);
         bacenRepository.save(bacenTransferEntity);
         String response = bacenClient.requestToAPIBacen(requestDTO.getCheckingAccountTo(), requestDTO.getCheckingAccountFrom(), requestDTO.getTransferAmount());
         verificationTransfer(response, bacenTransferEntity);
-        transferAndBalanceRepository.save(transferEntity.get());
-        transferAndBalanceRepository.save(receiveEntity.get());
+        transferAndBalanceRepository.save(transferEntity.get().get());
+        transferAndBalanceRepository.save(receiveEntity.get().get());
         return accountMapper.toCheckingAccountTransferResponse();
     }
 
