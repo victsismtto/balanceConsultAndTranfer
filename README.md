@@ -35,7 +35,7 @@ Para chamar todos os endpoints dessa aplicação, precisa baixar o MockCadastro 
    git clone https://github.com/victsismtto/APIMockBacen.git
 
 
-## configuration
+## Configuration
 
 No mongoDB, criar uma DataBAse chamada "ApiDatabase" com as collections: "Accounts", "Cadastro", "PersistenceAccounts" e depois de criar uma DataBase sua, trocar o "usernam" e "password" pelas suas.
 
