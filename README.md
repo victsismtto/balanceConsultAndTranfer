@@ -1,6 +1,6 @@
 # balanceConsultTransfer
 
-Poposta: clientes consigam realizar as operações de Consulta de Saldo e Transferência entre contas.
+Proposal: customers can carry out Balance Inquiry and Transfer operations between accounts.
 
 ## Table of Contents
 
@@ -12,7 +12,7 @@ Poposta: clientes consigam realizar as operações de Consulta de Saldo e Transf
 
 ## Getting Started
 
-Para usar o projeto, é recomendado entender um pouco de sprinboot, linguagem Java e ter uma IDEA para poder visualizar bem o código e a hierarquia de pastas.
+To put into service the project, it is recommended to have a basic understanding of springboot, Java language and have an IDEA to be able to visualize the code and folder hierarchy.
 
 ### Prerequisites
 
@@ -24,7 +24,7 @@ List the software and tools that need to be installed before setting up the proj
 
 ### Installation
 
-Para chamar todos os endpoints dessa aplicação, precisa baixar o MockCadastro e MockBacen e rodar todos eles localmente, principalmente para o PATCH.
+To reach all the endpoints of this application, you need to download MockCadastro and MockBacen and run them all locally, mainly for PATCH.
 
 1. Clone the repository:
 
@@ -37,9 +37,9 @@ Para chamar todos os endpoints dessa aplicação, precisa baixar o MockCadastro 
 
 ## Configuration
 
-No mongoDB, criar uma DataBAse chamada "ApiDatabase" com as collections: "Accounts", "Cadastro", "PersistenceAccounts" e depois de criar uma DataBase sua, trocar o "usernam" e "password" pelas suas.
+In MongoDB, create a Database called "ApiDatabase" with the collections: "Accounts", "Cadastro", "PersistenceAccounts" and after creating your own DataBase, exchange the "username" and "password" for the ones you have created.
 
-No postman, criar os endpoints com os contexts path de cada API, sugiro separar por collection, assim fica possivel fazer as chamadas localmente.
+In Postman, create the endpoints with the context path of each API, I suggest separating them by collection, so that it will be possible to make the calls locally.
 
 ## Contributing
 
