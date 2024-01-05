@@ -16,7 +16,17 @@ public class ExceptionHandlerTest {
     }
 
     @Test
+    void handleSecurityServiceUnavailableTest() {
+        exceptionsHandler.handleSecurity(new ServiceUnavailableException("message"));
+    }
+
+    @Test
     void handleSecurityNotFoundTest() {
         exceptionsHandler.handleSecurity(new NotFoundException());
+    }
+
+    @Test
+    void handleSecurityBadRequestTest() {
+        exceptionsHandler.handleSecurity(new BadRequestException("message"));
     }
 }

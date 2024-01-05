@@ -24,4 +24,9 @@ public class ExceptionsHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<ExceptionResponse> handleSecurity(ServiceUnavailableException e) {
         return  ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(new ExceptionResponse(e.getMessage()));
     }
+
+    @ExceptionHandler(BadRequestException.class)
+    protected ResponseEntity<ExceptionResponse> handleSecurity(BadRequestException e) {
+        return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponse(e.getMessage()));
+    }
 }

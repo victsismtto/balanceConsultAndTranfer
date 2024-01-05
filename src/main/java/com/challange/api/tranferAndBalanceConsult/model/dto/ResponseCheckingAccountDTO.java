@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ResponseCheckingAccountTransferDTO {
+public class ResponseCheckingAccountDTO {
 
     private String message;
     private String date;

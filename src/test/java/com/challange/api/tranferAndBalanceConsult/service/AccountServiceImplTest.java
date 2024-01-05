@@ -8,9 +8,9 @@ import com.challange.api.tranferAndBalanceConsult.model.CheckingAccountFrom;
 import com.challange.api.tranferAndBalanceConsult.model.CheckingAccountTo;
 import com.challange.api.tranferAndBalanceConsult.model.dto.APICadastroDTO;
 import com.challange.api.tranferAndBalanceConsult.model.dto.RequestBalanceConsultDTO;
-import com.challange.api.tranferAndBalanceConsult.model.dto.RequestCheckingAccountTransferDTO;
+import com.challange.api.tranferAndBalanceConsult.model.dto.RequestCheckingAccountDTO;
 import com.challange.api.tranferAndBalanceConsult.model.entity.BacenTransferEntity;
-import com.challange.api.tranferAndBalanceConsult.model.entity.TransferAndBalanceConsultEntity;
+import com.challange.api.tranferAndBalanceConsult.model.entity.AccountsEntity;
 import com.challange.api.tranferAndBalanceConsult.repository.BacenRepository;
 import com.challange.api.tranferAndBalanceConsult.repository.TransferAndBalanceRepository;
 import com.challange.api.tranferAndBalanceConsult.service.impl.AccountServiceImpl;
@@ -67,14 +67,14 @@ public class AccountServiceImplTest {
                 .number("1234")
                 .build();
 
-        RequestCheckingAccountTransferDTO requestDTO = RequestCheckingAccountTransferDTO.builder()
+        RequestCheckingAccountDTO requestDTO = RequestCheckingAccountDTO.builder()
                 .checkingAccountTo(checkingAccountTo)
                 .checkingAccountFrom(checkingAccountFrom)
                 .transferAmount(200.00)
                 .idBank("1")
                 .build();
 
-        Optional<TransferAndBalanceConsultEntity> transferEntity = Optional.ofNullable(TransferAndBalanceConsultEntity.builder()
+        Optional<AccountsEntity> transferEntity = Optional.ofNullable(AccountsEntity.builder()
                 .name("Client_1")
                 .isActive(true)
                 .date("01-01-2023")
@@ -106,14 +106,14 @@ public class AccountServiceImplTest {
                 .number("1234")
                 .build();
 
-        RequestCheckingAccountTransferDTO requestDTO = RequestCheckingAccountTransferDTO.builder()
+        RequestCheckingAccountDTO requestDTO = RequestCheckingAccountDTO.builder()
                 .checkingAccountTo(checkingAccountTo)
                 .checkingAccountFrom(checkingAccountFrom)
                 .transferAmount(200.00)
                 .idBank("1")
                 .build();
 
-        Optional<TransferAndBalanceConsultEntity> transferEntity = Optional.ofNullable(TransferAndBalanceConsultEntity.builder()
+        Optional<AccountsEntity> transferEntity = Optional.ofNullable(AccountsEntity.builder()
                 .name("Client_1")
                 .isActive(true)
                 .date("01-01-2023")
@@ -130,7 +130,7 @@ public class AccountServiceImplTest {
         Mockito.when(cadastroClient.requestToAPICadastro("1")).thenReturn(cadastroDTO);
         Mockito.when(transferAndBalanceRepository.findByName(cadastroDTO.getName())).thenReturn(transferEntity);
         Mockito.when(transferAndBalanceRepository.findByIssuerAndNumber(requestDTO.getCheckingAccountTo().getIssuer(), requestDTO.getCheckingAccountFrom().getNumber())).thenReturn(transferEntity);
-        Mockito.when(bacenClient.requestToAPIBacen(checkingAccountTo, checkingAccountFrom)).thenReturn("resposta");
+        Mockito.when(bacenClient.requestToAPIBacen(checkingAccountTo, checkingAccountFrom, bacenTransferEntity.getTransactionAmount())).thenReturn("resposta");
         Mockito.when(accountMapper.toBacenEntity(requestDTO)).thenReturn(bacenTransferEntity);
 
         Assertions.assertDoesNotThrow(
@@ -153,14 +153,14 @@ public class AccountServiceImplTest {
                 .number("1234")
                 .build();
 
-        RequestCheckingAccountTransferDTO requestDTO = RequestCheckingAccountTransferDTO.builder()
+        RequestCheckingAccountDTO requestDTO = RequestCheckingAccountDTO.builder()
                 .checkingAccountTo(checkingAccountTo)
                 .checkingAccountFrom(checkingAccountFrom)
                 .transferAmount(200.00)
                 .idBank("1")
                 .build();
 
-        Optional<TransferAndBalanceConsultEntity> transferEntity = Optional.ofNullable(TransferAndBalanceConsultEntity.builder()
+        Optional<AccountsEntity> transferEntity = Optional.ofNullable(AccountsEntity.builder()
                 .name("Client_1")
                 .isActive(true)
                 .date("01-01-2023")
@@ -198,7 +198,7 @@ public class AccountServiceImplTest {
         List<BacenTransferEntity> listTransfer = new ArrayList<>();
         listTransfer.add(transferEntity);
 
-        Mockito.when(bacenClient.requestToAPIBacen(checkingAccountTo, checkingAccountFrom)).thenReturn("resposta");
+        Mockito.when(bacenClient.requestToAPIBacen(checkingAccountTo, checkingAccountFrom, transferEntity.getTransactionAmount())).thenReturn("resposta");
         Mockito.when(bacenRepository.findByCompletedIsFalse()).thenReturn(Optional.of(listTransfer));
         Assertions.assertDoesNotThrow(
                 () -> service.schedule());
@@ -212,7 +212,7 @@ public class AccountServiceImplTest {
                 .issuer("1234")
                 .build();
 
-        Optional<TransferAndBalanceConsultEntity> transferEntity = Optional.ofNullable(TransferAndBalanceConsultEntity.builder()
+        Optional<AccountsEntity> transferEntity = Optional.ofNullable(AccountsEntity.builder()
                 .balance(200.00)
                 .number("0001")
                 .issuer("1234")

@@ -1,6 +1,7 @@
 package com.challange.api.tranferAndBalanceConsult.client;
 
 
+import com.challange.api.tranferAndBalanceConsult.exception.BadRequestException;
 import com.challange.api.tranferAndBalanceConsult.exception.NotFoundException;
 import com.challange.api.tranferAndBalanceConsult.exception.ServiceUnavailableException;
 import com.challange.api.tranferAndBalanceConsult.model.CheckingAccountFrom;
@@ -29,18 +30,23 @@ public class APIBacenClient {
     private RestTemplate restTemplate;
 
     @Retry(name = "clientRetry")
-    public String requestToAPIBacen(CheckingAccountTo accountTo, CheckingAccountFrom accountFrom) {
+    public String requestToAPIBacen(CheckingAccountTo accountTo, CheckingAccountFrom accountFrom, Double transferAmount) {
         try {
             HttpHeaders headers = new HttpHeaders();
             headers.set("issuerTo", accountTo.getIssuer());
             headers.set("numberTo", accountTo.getNumber());
             headers.set("issuerFrom", accountFrom.getIssuer());
             headers.set("numberFrom", accountFrom.getNumber());
+            headers.set("transferAmount", String.valueOf(transferAmount));
             ResponseEntity<String> response = restTemplate.exchange(bacenEndpoint, HttpMethod.POST, new HttpEntity<>(headers), String.class);
             log.info(response.getBody());
             return response.getBody();
         } catch (HttpClientErrorException e) {
-            return null;
+            if (e.getStatusCode().value() == 429) {
+                return null;
+            }
+            throw new BadRequestException(MessageUtils.BAD_REQUEST_BACEN);
+
         } catch (Exception e) {
             throw new ServiceUnavailableException(MessageUtils.SERVICE_UNAVAILABLE);
         }
