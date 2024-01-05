@@ -36,7 +36,7 @@ public class AccountController {
 
     @PatchMapping("/bacen")
     @Scheduled(fixedRate = 60000)
-    public void schedulingBacenErrors() throws Exception {
+    public void schedulingBacenErrors() {
         log.info("Entering in the controller - Schedule");
         service.schedule();
         log.info("leaving the controller - Schedule");
