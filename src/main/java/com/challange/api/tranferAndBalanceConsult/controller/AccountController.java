@@ -30,7 +30,7 @@ public class AccountController {
     public ResponseEntity<ResponseCheckingAccountDTO> checkingAccountTransfer(@RequestBody RequestCheckingAccountDTO requestDTO) throws Exception {
         log.info("Entering in the controller - Account transfer");
         ResponseCheckingAccountDTO response = service.checkingAccountTransfer(requestDTO);
-        log.info("leaving in the controller - Account transfer");
+        log.info("leaving the controller - Account transfer");
         return ResponseEntity.ok().body(response);
     }
 
@@ -39,6 +39,6 @@ public class AccountController {
     public void schedulingBacenErrors() throws Exception {
         log.info("Entering in the controller - Schedule");
         service.schedule();
-        log.info("leaving in the controller - Schedule");
+        log.info("leaving the controller - Schedule");
     }
 }
