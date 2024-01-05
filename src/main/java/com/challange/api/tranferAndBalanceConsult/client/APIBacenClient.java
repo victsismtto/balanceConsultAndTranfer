@@ -1,6 +1,7 @@
 package com.challange.api.tranferAndBalanceConsult.client;
 
 
+import com.challange.api.tranferAndBalanceConsult.exception.BadRequestException;
 import com.challange.api.tranferAndBalanceConsult.exception.NotFoundException;
 import com.challange.api.tranferAndBalanceConsult.exception.ServiceUnavailableException;
 import com.challange.api.tranferAndBalanceConsult.model.CheckingAccountFrom;
@@ -41,7 +42,11 @@ public class APIBacenClient {
             log.info(response.getBody());
             return response.getBody();
         } catch (HttpClientErrorException e) {
-            return null;
+            if (e.getStatusCode().value() == 429) {
+                return null;
+            }
+            throw new BadRequestException(MessageUtils.BAD_REQUEST_BACEN);
+
         } catch (Exception e) {
             throw new ServiceUnavailableException(MessageUtils.SERVICE_UNAVAILABLE);
         }

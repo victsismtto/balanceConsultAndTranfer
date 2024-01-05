@@ -1,5 +1,6 @@
 package com.challange.api.tranferAndBalanceConsult.client;
 
+import com.challange.api.tranferAndBalanceConsult.exception.BadRequestException;
 import com.challange.api.tranferAndBalanceConsult.exception.ServiceUnavailableException;
 import com.challange.api.tranferAndBalanceConsult.model.CheckingAccountFrom;
 import com.challange.api.tranferAndBalanceConsult.model.CheckingAccountTo;
@@ -51,7 +52,7 @@ public class APIBacenClientTest {
     }
 
     @Test
-    void testRequestToAPIBacenError404() {
+    void testRequestToAPIBacenError429() {
 
         ReflectionTestUtils.setField(client, "bacenEndpoint", "http://localhost:8081/transaction/informed");
 
@@ -69,10 +70,34 @@ public class APIBacenClientTest {
 
 
         Mockito.when(restTemplate.exchange(Mockito.any(String.class), Mockito.any(HttpMethod.class),
-                Mockito.any(HttpEntity.class), Mockito.any(Class.class))).thenThrow(new HttpClientErrorException(HttpStatus.NOT_FOUND));
+                Mockito.any(HttpEntity.class), Mockito.any(Class.class))).thenThrow(new HttpClientErrorException(HttpStatus.TOO_MANY_REQUESTS));
 
-        Assertions.assertDoesNotThrow(
-            () -> client.requestToAPIBacen (checkingAccountTo, checkingAccountFrom, transferAmount));
+        client.requestToAPIBacen(checkingAccountTo, checkingAccountFrom, transferAmount);
+    }
+
+    @Test
+    void testRequestToAPIBacenError400() {
+
+        ReflectionTestUtils.setField(client, "bacenEndpoint", "http://localhost:8081/transaction/informed");
+
+        CheckingAccountTo checkingAccountTo = CheckingAccountTo.builder()
+                .issuer("0001")
+                .number("1234")
+                .build();
+
+        CheckingAccountFrom checkingAccountFrom = CheckingAccountFrom.builder()
+                .issuer("0001")
+                .number("1234")
+                .build();
+
+        Double transferAmount = 200.00;
+
+
+        Mockito.when(restTemplate.exchange(Mockito.any(String.class), Mockito.any(HttpMethod.class),
+                Mockito.any(HttpEntity.class), Mockito.any(Class.class))).thenThrow(new HttpClientErrorException(HttpStatus.BAD_REQUEST));
+
+        Assertions.assertThrows(BadRequestException.class, () ->
+                client.requestToAPIBacen (checkingAccountTo, checkingAccountFrom, transferAmount));
     }
 
     @Test
